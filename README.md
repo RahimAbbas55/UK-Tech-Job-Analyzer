@@ -41,6 +41,19 @@ A few real issues I found and fixed while building this:
 - Some "top hiring companies" were actually training providers or recruitment
   agencies rather than genuine employers — added keyword + manual filtering
 
+## Automated data refresh
+
+Job data refreshes automatically every 3 days via a scheduled GitHub Actions
+workflow — no manual re-running required. It fetches fresh listings, rebuilds
+the cleaned dataset, and commits the update back to the repo automatically.
+
+**Workflow running**
+![GitHub Action running](screenshots/github_action_running.png)
+
+**Successful run**
+![GitHub Action success 1](screenshots/github_action_1.png)
+![GitHub Action success 2](screenshots/github_action_2.png)
+
 ## Stack
 Python, Pandas, Plotly, Streamlit, Reed.co.uk API
 
