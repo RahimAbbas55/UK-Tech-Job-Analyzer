@@ -63,3 +63,12 @@ Python, Pandas, Plotly, Streamlit, Reed.co.uk API
 
 **Seniority mix & top hiring companies**
 ![Seniority and companies](screenshots/Seniority_Companies.png)
+
+---
+
+## Author
+
+**Rahim Abbas**
+Built while researching my own transition into data science/AI roles in the UK.
+
+[GitHub](https://github.com/RahimAbbas55) · [LinkedIn](https://www.linkedin.com/in/rahim-abbas-b5520b258/)
