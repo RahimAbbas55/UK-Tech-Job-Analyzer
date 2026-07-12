@@ -39,6 +39,13 @@ def fetch_jobs_for_term(term , api_key , max_results = 100):
     print(f"{term} : found {len(all_results)} jobs!")
     return all_results
 
+def fetch_job_detail(job_id, api_key):
+    url = f"https://www.reed.co.uk/api/1.0/jobs/{job_id}"
+    response = requests.get(url, auth=(api_key, ""))
+    if response.status_code == 200:
+        return response.json()
+    return {}
+
 # Main caller function
 def main():
     api_key = os.environ.get("REED_API_KEY")
@@ -53,6 +60,19 @@ def main():
         all_jobs.extend(jobs)
     df = pd.DataFrame(all_jobs)
     df = df.drop_duplicates(subset = ["jobId"])
+    os.makedirs("data" , exist_ok = True)
+    df.to_csv("data/raw_jobs.csv" , index = False)
+    df = pd.DataFrame(all_jobs)
+    df = df.drop_duplicates(subset = ["jobId"])
+
+    print("Fetching full job descriptions (this will take a minute)...")
+    full_descriptions = []
+    for job_id in df["jobId"]:
+        detail = fetch_job_detail(job_id, api_key)
+        full_descriptions.append(detail.get("jobDescription", ""))
+        time.sleep(0.5)
+    df["jobDescription"] = full_descriptions
+
     os.makedirs("data" , exist_ok = True)
     df.to_csv("data/raw_jobs.csv" , index = False)
     print(f"Saved {len(df)} unique jobs to data/raw_jobs.csv")
