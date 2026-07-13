@@ -98,6 +98,26 @@ cleaned dataset, and commits the update back to the repo automatically.
 
 ---
 
+## 😴 Automated Uptime (Keepalive)
+
+Streamlit Community Cloud puts free-tier apps to sleep after 12 hours of no
+traffic. Since this dashboard is meant to be clicked on directly from a CV or
+LinkedIn post, a sleeping app on first visit would be a bad first impression —
+so a second, independent GitHub Actions workflow pings the live app every 6
+hours using a headless browser (Playwright) to keep it continuously awake.
+
+**Why a plain HTTP request doesn't work:** a simple `requests.get()` call
+returns a `200 OK` even when the app is asleep — it just receives a static
+HTML shell, since Streamlit's wake mechanism requires a real browser to
+establish a WebSocket connection. `keepalive.py` uses Playwright to actually
+load the page, detect the "Yes, get this app back up!" button if present, and
+click it.
+
+**Schedule:** every 6 hours (`0 */6 * * *`), comfortably within the 12-hour
+sleep window.
+
+---
+
 ## 🛠️ Stack
 
 `Python` · `Pandas` · `Plotly` · `Streamlit` · `Reed.co.uk API` · `GitHub Actions`
