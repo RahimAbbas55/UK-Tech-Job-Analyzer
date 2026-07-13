@@ -3,3 +3,4 @@ requests
 streamlit
 plotly
 python-dotenv
+playwright
